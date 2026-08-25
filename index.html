@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore ICL Completo Prodotti Liquidi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 20px; background-color: #f3f7f4; color: #2c3e50;
+        }
+        .container {
+            max-width: 1100px; background: #ffffff; padding: 30px;
+            border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin: 0 auto;
+        }
+        .header-flex {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid #007a3d; padding-bottom: 10px; margin-bottom: 20px;
+        }
+        h2 { color: #007a3d; margin: 0; }
+        .btn-stampa {
+            background-color: #007a3d; color: white; border: none; padding: 10px 20px;
+            font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer;
+        }
+        .btn-stampa:hover { background-color: #005c2e; }
+        .form-group {
+            margin-bottom: 25px; background: #eef7f1; padding: 15px;
+            border-radius: 8px; border-left: 5px solid #007a3d;
+        }
+        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 16px; }
+        input {
+            width: 100%; padding: 12px; font-size: 16px; box-sizing: border-box;
+            border: 1px solid #cccccc; border-radius: 6px; outline: none;
+        }
+        input:focus { border-color: #007a3d; }
+        h3 { color: #ffffff; margin-top: 30px; font-size: 15px; padding: 10px; border-radius: 6px; }
+        .bg-fungicidi { background-color: #c0392b; }
+        .bg-erbicidi { background-color: #d35400; }
+        .bg-insetticidi { background-color: #d39e00; }
+        .bg-greenmaster { background-color: #27ae60; }
+        .bg-vitalnova { background-color: #8e44ad; }
+        .bg-umettanti { background-color: #2980b9; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e9ecef; font-size: 13.5px; }
+        th { background-color: #f1f2f6; color: #333; font-weight: 600; }
+        tr:hover { background-color: #f8fafd; }
+        .valore-evidenziato { font-weight: bold; color: #d35400; }
+        .acqua-evidenziata { font-weight: bold; color: #2980b9; }
+        .conf-evidenziata { font-weight: bold; color: #7f8c8d; }
+        .nota { font-size: 11.5px; color: #7f8c8d; margin-top: 5px; }
+
+        @media print {
+            body { background-color: #ffffff; padding: 0; }
+            .container { box-shadow: none; max-width: 100%; padding: 0; }
+            .btn-stampa, .form-group { display: none; }
+            h3 { background: #555 !important; color: #fff !important; page-break-after: avoid; }
+            table { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-flex">
+        <h2>Calcolatore Dosaggi Liquidi ICL Solutions (Catalogo Integrato)</h2>
+        <button class="btn-stampa" onclick="window.print()">Stampa Scheda Campo</button>
+    </div>
+    
+    <div class="form-group">
+        <label for="mq">Superficie del Tappeto Erboso / Area Verde in Metri Quadri (mq):</label>
+        <input type="number" id="mq" placeholder="Inserisci la superficie totale" oninput="calcolaTuttiIDosaggi()" min="0" step="any">
+    </div>
+
+    <!-- AGROFARMACI -->
+    <h3 class="bg-fungicidi">AGROFARMACI: FUNGICIDI</h3>
+    <table>
+        <thead><tr><th>Prodotto</th><th>Dose Etichetta</th><th>Quantità Netta</th><th>Acqua Minima</th><th>Confezioni (Arrotondate per Eccesso)</th></tr></thead>
+        <tbody>
+            <tr class="riga-prodotto" data-dose-mq="0.05" data-acqua-mq="50" data-unita="g" data-formato-conf="100">
+                <td><strong>Heritage</strong> (Azoxystrobin)</td><td>0,5 kg/ha (0.05 g/mq)</td><td><span class="risultato-prodotto">0.00 g</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Astuccio 100g)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="0.3" data-acqua-mq="40" data-unita="ml" data-formato-conf="500">
+                <td><strong>Instrata Elite</strong> (Fludioxonil + Difenoc.)</td><td>3 L/ha (0.3 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Flacone 500ml)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="0.1" data-acqua-mq="45" data-unita="ml" data-formato-conf="1000">
+                <td><strong>Dedicate</strong> (Tebuconazolo + Triflox.)</td><td>1 L/ha (0.1 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Flacone 1L)</small></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 class="bg-erbicidi">AGROFARMACI: ERBICIDI LIQUIDI</h3>
+    <table>
+        <thead><tr><th>Prodotto</th><th>Dose Etichetta</th><th>Quantità Netta</th><th>Acqua Minima</th><th>Confezioni (Arrotondate per Eccesso)</th></tr></thead>
+        <tbody>
+            <tr class="riga-prodotto" data-dose-mq="0.15" data-acqua-mq="40" data-unita="ml" data-formato-conf="500">
+                <td><strong>Warm-Up® 100</strong> (Mesotrione)</td><td>1,5 L/ha (0.15 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Flacone 500ml)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="0.75" data-acqua-mq="40" data-unita="ml" data-formato-conf="1000">
+                <td><strong>Dicotex</strong> (Selettivo Foglia Larga)</td><td>7.5 L/ha (0.75 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Flacone 1L)</small></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 class="bg-insetticidi">AGROFARMACI: INSETTICIDI LIQUIDI</h3>
+    <table>
+        <thead><tr><th>Prodotto</th><th>Dose Etichetta</th><th>Quantità Netta</th><th>Acqua Minima</th><th>Confezioni (Arrotondate per Eccesso)</th></tr></thead>
+        <tbody>
+            <tr class="riga-prodotto" data-dose-mq="0.06" data-acqua-mq="50" data-unita="ml" data-formato-conf="300">
+                <td><strong>Acelepryn®</strong> (Chlorantraniliprole)</td><td>0,6 L/ha (0.06 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Flacone 300ml)</small></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- NUTRIZIONE COMPLETA -->
+    <h3 class="bg-greenmaster">NUTRIZIONE: LINEA GREENMASTER LIQUID (Tutte le Formulazioni)</h3>
+    <table>
+        <thead><tr><th>Prodotto</th><th>Dose Riferimento</th><th>Quantità Netta</th><th>Acqua Consigliata</th><th>Confezioni (Arrotondate per Eccesso)</th></tr></thead>
+        <tbody>
+            <tr class="riga-prodotto" data-dose-mq="8" data-acqua-mq="60" data-unita="ml" data-formato-conf="10000">
+                <td>Greenmaster Liquid High N (Alto Azoto 25-0-0)</td><td>80 L/ha (8 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="8" data-acqua-mq="60" data-unita="ml" data-formato-conf="10000">
+                <td>Greenmaster Liquid High K (Alto Potassio 0-0-25)</td><td>80 L/ha (8 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="8" data-acqua-mq="60" data-unita="ml" data-formato-conf="10000">
+                <td>Greenmaster Liquid Spring & Summer (12-4-6)</td><td>80 L/ha (8 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="8" data-acqua-mq="60" data-unita="ml" data-formato-conf="10000">
+                <td>Greenmaster Liquid NK (10-0-10)</td><td>80 L/ha (8 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="10" data-acqua-mq="60" data-unita="ml" data-formato-conf="10000">
+                <td>Greenmaster Liquid Effect Iron (Rinverdente Ferroso)</td><td>100 L/ha (10 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="3" data-acqua-mq="60" data-unita="ml" data-formato-conf="10000">
+                <td>Greenmaster Liquid CalMag (Calcio e Magnesio)</td><td>30 L/ha (3 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- BIOSTIMOLANTI -->
+    <h3 class="bg-vitalnova">BIOSTIMOLANTI: LINEA VITALNOVA LIQUIDI</h3>
+    <table>
+        <thead><tr><th>Prodotto</th><th>Dose Riferimento</th><th>Quantità Netta</th><th>Acqua Consigliata</th><th>Confezioni (Arrotondate per Eccesso)</th></tr></thead>
+        <tbody>
+            <tr class="riga-prodotto" data-dose-mq="3" data-acqua-mq="70" data-unita="ml" data-formato-conf="10000">
+                <td>Vitalnova Stressbuster (Antistress e Carboidrati)</td><td>30 L/ha (3 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="2" data-acqua-mq="70" data-unita="ml" data-formato-conf="10000">
+                <td>Vitalnova SMX (Concentrato Puro di Alghe)</td><td>20 L/ha (2 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="2.5" data-acqua-mq="70" data-unita="ml" data-formato-conf="10000">
+                <td>Vitalnova Blade (Biostimolante radicale)</td><td>25 L/ha (2.5 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="3" data-acqua-mq="70" data-unita="ml" data-formato-conf="10000">
+                <td>Vitalnova Links (Biostimolante completo)</td><td>30 L/ha (3 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 10L)</small></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- AGENTI UMETTANTI E COADIUVANTI -->
+    <h3 class="bg-umettanti">GESTIONE IDRICA E COADIUVANTI: H2PRO & RIDER</h3>
+    <table>
+        <thead><tr><th>Prodotto</th><th>Dose Riferimento</th><th>Quantità Netta</th><th>Acqua Consigliata</th><th>Confezioni (Arrotondate per Eccesso)</th></tr></thead>
+        <tbody>
+            <tr class="riga-prodotto" data-dose-mq="2.5" data-acqua-mq="80" data-unita="ml" data-formato-conf="5000">
+                <td>H2Pro TriSmart (Umettante Premium - Tre azioni)</td><td>25 L/ha (2.5 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 5L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="2.5" data-acqua-mq="80" data-unita="ml" data-formato-conf="5000">
+                <td>H2Pro AquaSmart (Umettante salva-acqua)</td><td>25 L/ha (2.5 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 5L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="1" data-acqua-mq="80" data-unita="ml" data-formato-conf="5000">
+                <td>H2Pro FlowSmart (Penetrante anti-ristagno)</td><td>10 L/ha (1 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Tanica 5L)</small></td>
+            </tr>
+            <tr class="riga-prodotto" data-dose-mq="0.12" data-acqua-mq="40" data-unita="ml" data-formato-conf="1000">
+                <td><strong>Rider</strong> (Pigmento blu / Indicatore di scia)</td><td>1.2 L/ha (0.12 ml/mq)</td><td><span class="risultato-prodotto">0.00 ml</span></td><td><span class="risultato-acqua">0.00 L</span></td><td><span class="risultato-confezioni">0</span> <small class="conf-evidenziata">(Flacone 1L)</small></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p class="nota">* Nota: I calcoli commerciali stimano i flaconi interi necessari per coprire l'intera area senza subire interruzioni. Rispettare rigorosamente l'ordine di miscelazione nel serbatoio quando si accoppiano più prodotti liquidi diversi.</p>
+</div>
+
+<script>
+function calcolaTuttiIDosaggi() {
+    const mq = parseFloat(document.getElementById('mq').value);
+    const righe = document.querySelectorAll('.riga-prodotto');
+
+    if (isNaN(mq) || mq <= 0) {
+        righe.forEach(riga => {
+            const unita = riga.getAttribute('data-unita');
+            riga.querySelector('.risultato-prodotto').innerText = "0.00 " + unita;
+            riga.querySelector('.risultato-acqua').innerText = "0.00 L";
+            riga.querySelector('.risultato-confezioni').innerText = "0";
+        });
+        return;
+    }
+
+    righe.forEach(riga => {
+        const dosePerMq = parseFloat(riga.getAttribute('data-dose-mq'));
+        const acquaPerMq = parseFloat(riga.getAttribute('data-acqua-mq')) / 1000;
+        const unitaBase = riga.getAttribute('data-unita');
+        const formatoConf = parseFloat(riga.getAttribute('data-formato-conf'));
+
+        const doseTotale = mq * dosePerMq;
+        const acquaTotale = mq * acquaPerMq;
+        const confezioniNecessarie = Math.ceil(doseTotale / formatoConf);
+
+        const spanProdotto = riga.querySelector('.risultato-prodotto');
+        if (unitaBase === "ml") {
+            if (doseTotale >= 1000) {
+                spanProdotto.innerHTML = `<span class="valore-evidenziato">${(doseTotale / 1000).toFixed(2)}</span> L`;
+            } else {
+                spanProdotto.innerHTML = `<span class="valore-evidenziato">${doseTotale.toFixed(1)}</span> ml`;
+            }
+        } else if (unitaBase === "g") {
+            if (doseTotale >= 1000) {
+                spanProdotto.innerHTML = `<span class="valore-evidenziato">${(doseTotale / 1000).toFixed(2)}</span> kg`;
+            } else {
+                spanProdotto.innerHTML = `<span class="valore-evidenziato">${doseTotale.toFixed(1)}</span> g`;
+            }
+        }
+
+        riga.querySelector('.risultato-acqua').innerHTML = `<span class="acqua-evidenziata">${acquaTotale.toFixed(1)}</span> L`;
+        riga.querySelector('.risultato-confezioni').innerHTML = `<span class="valore-evidenziato">${confezioniNecessarie}</span>`;
+    });
+}
+</script>
+
+</body>
+</html>
